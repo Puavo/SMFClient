@@ -1,4 +1,5 @@
 {
+  "name": "puavo/SMFClient",
   "autoload": {
     "classmap": ["src/"]
   }
