@@ -1,6 +1,6 @@
 <?php
 
-namespace SMFClient\ConnectionInterface;
+namespace SMFClient;
 
 interface ConnectionInterface {
 	public function __construct($forumAddress, $user, $password);

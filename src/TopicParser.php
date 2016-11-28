@@ -1,6 +1,6 @@
 <?php
 
-namespace SMFClient\TopicParser;
+namespace SMFClient;
 
 class TopicParser {
 

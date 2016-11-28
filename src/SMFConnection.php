@@ -1,6 +1,6 @@
 <?php
 
-namespace SMFClient\SMFConnection;
+namespace SMFClient;
 
 /**
  * Class to handle connection to Simple machines forum. 
