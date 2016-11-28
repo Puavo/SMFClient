@@ -1,5 +1,7 @@
 <?php
 
+namespace SMFClient\ConnectionInterface;
+
 interface ConnectionInterface {
 	public function __construct($forumAddress, $user, $password);
 	public function createTopic($boardId, $subject, $message);

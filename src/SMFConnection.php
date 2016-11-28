@@ -1,5 +1,7 @@
 <?php
 
+namespace SMFClient\SMFConnection;
+
 /**
  * Class to handle connection to Simple machines forum. 
  *

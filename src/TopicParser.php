@@ -1,5 +1,7 @@
 <?php
 
+namespace SMFClient\TopicParser;
+
 class TopicParser {
 
 	private static function removeQuotes($topic) {

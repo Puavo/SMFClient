@@ -1,6 +1,6 @@
 {
   "name": "puavo/SMFClient",
   "autoload": {
-    "classmap": ["src/"]
+    "psr-4": {"SMFClient\\": "src/"}
   }
 }
