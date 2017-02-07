@@ -92,4 +92,28 @@ class TopicParser {
 
 		return $messages;
 	}
+
+	/*
+	 * Filter messages containing given pattern
+	 *
+	 */
+        public static function parseRegex($messages, $pattern, $copyFields, $matchFields) {
+                $totalResults = [];
+                foreach ($messages as $message) {
+                        $matches = [];
+                        $body = $message['bodyWithoutQuotes'];
+                        $count = preg_match_all($pattern, $body, $matches);
+                        for ($i = 0; $i < $count; $i++) {
+                                $result = [];
+                                foreach ($copyFields as $copyField) {
+                                        $result[$copyField] = $message[$copyField];
+                                }
+                                for ($j = 0; $j < count($matchFields); $j++) {
+                                        if ($matchFields[$j]) $result[$matchFields[$j]] = $matches[$j][$i];
+                                }
+                                $totalResults[] = $result;
+                        }
+                }
+                return $totalResults;
+        }
 }
