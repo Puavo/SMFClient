@@ -32,12 +32,23 @@ class SMFConnection implements ConnectionInterface {
 			CURLOPT_SSL_VERIFYHOST =>  FALSE,
 			CURLOPT_FOLLOWLOCATION => TRUE,
 			CURLOPT_COOKIEJAR => $_SERVER['DOCUMENT_ROOT'] . "/cookie.txt",
-			CURLOPT_URL => $this->address . "/index.php",
-			CURLOPT_POSTFIELDS => "&action=login2&user=$user&passwrd=$password&cookielength=-1&submit=Login",
+			CURLOPT_URL => $this->address . "/index.php&action=login2",
+			CURLOPT_POSTFIELDS => "&user=$user&passwrd=$password&cookielength=-1&submit=Login",
 			CURLOPT_RETURNTRANSFER => TRUE,
 		));
+                // Get post form
+                curl_setopt($this->connection, CURLOPT_POST, FALSE);
+                curl_setopt($this->connection, CURLOPT_URL, $this->address . "/index.php?action=login");
+                $result = curl_exec($this->connection);
+                // Parse necessary hidden fields from form.
+                preg_match_all("/<input type=\"hidden\" name=\"(.*?)\" value=\"(.*?)\" \/>/", $result, $matches);
+                $name = $matches[1][1];
+                $value = $matches[2][1];
+                curl_setopt($this->connection, CURLOPT_POST, TRUE);
+                curl_setopt($this->connection, CURLOPT_URL, $this->address . "/index.php?action=login2");
+                curl_setopt($this->connection,  CURLOPT_POSTFIELDS, "user=$user&passwrd=$password&cookielength=-1&{$name}={$value}&submit=Login");
 
-		$result = curl_exec($this->connection);
+                $result = curl_exec($this->connection);
 	}
 
 	/**
@@ -164,7 +175,7 @@ class SMFConnection implements ConnectionInterface {
 	 * @param $searchWord Search for messages containing this word.
 	 *
 	 * @return String $result
-	 *   Results of the search. 
+	 *   Results of the search.
 	 */
 	public function readPrivateMessages($searchWord) {
 		// Access private message search
